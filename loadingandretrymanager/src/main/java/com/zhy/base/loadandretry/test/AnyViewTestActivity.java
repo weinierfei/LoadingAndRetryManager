@@ -10,26 +10,22 @@ import com.zhy.base.loadandretry.LoadingAndRetryManager;
 import com.zhy.base.loadandretry.OnLoadingAndRetryListener;
 import com.zhy.base.loadandretry.R;
 
-public class AnyViewTestActivity extends AppCompatActivity
-{
+public class AnyViewTestActivity extends AppCompatActivity {
 
     private TextView mTextView;
 
     LoadingAndRetryManager mLoadingAndRetryManager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anyview_test);
 
         mTextView = (TextView) findViewById(R.id.id_textview);
 
-        mLoadingAndRetryManager = LoadingAndRetryManager.generate(mTextView, new OnLoadingAndRetryListener()
-        {
+        mLoadingAndRetryManager = LoadingAndRetryManager.generate(mTextView, new OnLoadingAndRetryListener() {
             @Override
-            public void setRetryEvent(View retryView)
-            {
+            public void setRetryEvent(View retryView) {
                 retryRefreashTextView(retryView);
             }
         });
@@ -39,27 +35,20 @@ public class AnyViewTestActivity extends AppCompatActivity
 
     }
 
-    private void refreashTextView()
-    {
+    private void refreashTextView() {
         mLoadingAndRetryManager.showLoading();
 
-        new Thread()
-        {
+        new Thread() {
             @Override
-            public void run()
-            {
-                try
-                {
+            public void run() {
+                try {
                     Thread.sleep(2000);
-                } catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (Math.random() > 0.6)
-                {
+                if (Math.random() > 0.6) {
                     mLoadingAndRetryManager.showContent();
-                } else
-                {
+                } else {
                     mLoadingAndRetryManager.showRetry();
                 }
             }
@@ -68,14 +57,11 @@ public class AnyViewTestActivity extends AppCompatActivity
 
     }
 
-    public void retryRefreashTextView(View retryView)
-    {
+    public void retryRefreashTextView(View retryView) {
         View view = retryView.findViewById(R.id.id_btn_retry);
-        view.setOnClickListener(new View.OnClickListener()
-        {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Toast.makeText(AnyViewTestActivity.this, "retry event invoked", Toast.LENGTH_SHORT).show();
                 AnyViewTestActivity.this.refreashTextView();
             }
